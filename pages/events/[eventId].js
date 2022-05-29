@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import Head from 'next/head';
 
 import EventContent from '../../components/event-detail/event-content';
 import EventLogistics from '../../components/event-detail/event-logistics';
@@ -11,7 +12,8 @@ import {
 } from '../../helpers/api-util';
 
 export default function EventDetailPage(props) {
-  if (!props.event)
+  const { event } = props;
+  if (!event)
     return (
       <Fragment>
         <div className='center'>
@@ -25,15 +27,19 @@ export default function EventDetailPage(props) {
 
   return (
     <Fragment>
-      <EventSummary title={props.event.title}></EventSummary>
+      <Head>
+        <title>{event.title}</title>
+        <meta name='description' content={event.description} />
+      </Head>
+      <EventSummary title={event.title}></EventSummary>
       <EventLogistics
-        date={props.event.date}
-        address={props.event.location}
-        image={props.event.image}
-        imageAlt={props.event.title}
+        date={event.date}
+        address={event.location}
+        image={event.image}
+        imageAlt={event.title}
       ></EventLogistics>
       <EventContent>
-        <p>{props.event.description}</p>
+        <p>{event.description}</p>
       </EventContent>
     </Fragment>
   );

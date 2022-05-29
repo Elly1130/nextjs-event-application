@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import Image from 'next/image';
 
-import AddressIcon from "../icons/address-icon";
-import DateIcon from "../icons/date-icon";
-import LogisticsItem from "./logistics-item";
+import AddressIcon from '../icons/address-icon';
+import DateIcon from '../icons/date-icon';
+import LogisticsItem from './logistics-item';
 
 const Logistic = styled.section`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -32,7 +33,7 @@ const Logistic = styled.section`
   }
 `;
 
-const Image = styled.div`
+const StyledImage = styled.div`
   width: 10rem;
   height: 10rem;
   border-radius: 50%;
@@ -72,18 +73,18 @@ const List = styled.ul`
 function EventLogistics(props) {
   const { date, address, image, imageAlt } = props;
 
-  const humanReadableDate = new Date(date).toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
-  const addressText = address.replace(", ", "\n");
+  const addressText = address.replace(', ', '\n');
 
   return (
     <Logistic>
-      <Image>
-        <img src={`/${image}`} alt={imageAlt} />
-      </Image>
+      <StyledImage>
+        <Image src={`/${image}`} alt={imageAlt} width={300} height={300} />
+      </StyledImage>
       <List>
         <LogisticsItem icon={DateIcon}>
           <time>{humanReadableDate}</time>

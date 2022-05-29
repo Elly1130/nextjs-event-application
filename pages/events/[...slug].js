@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react/cjs/react.development';
 import useSWR from 'swr';
+import Head from 'next/head';
 
 import EventList from '../../components/events/event-list';
 import ResultsTitle from '../../components/events/results-title';
@@ -49,10 +50,33 @@ function FilteredEventPage(props) {
   //   }
   // }, [data]);
 
-  if (!loadedEvents) return <p className='center'>Loading...</p>;
+  let pageHeadData = (
+    <Head>
+      <title>Filtered Event</title>
+      <meta name='description' content='A list of filtered events' />
+    </Head>
+  );
+
+  if (!loadedEvents)
+    return (
+      <Fragment>
+        {pageHeadData}
+        <p className='center'>Loading...</p>
+      </Fragment>
+    );
 
   const numYear = +filteredData[0];
   const numMonth = +filteredData[1];
+
+  pageHeadData = (
+    <Head>
+      <title>Filtered Event</title>
+      <meta
+        name='description'
+        content={`All events for ${numYear}/${numMonth}`}
+      />
+    </Head>
+  );
 
   if (
     isNaN(numYear) ||
@@ -63,6 +87,7 @@ function FilteredEventPage(props) {
   )
     return (
       <Fragment>
+        {pageHeadData}
         <ErrorAlert>
           <p>Invalid filter. Please adjust your values.</p>
         </ErrorAlert>
@@ -83,6 +108,7 @@ function FilteredEventPage(props) {
   if (!filteredEvent || filteredEvent.length === 0)
     return (
       <Fragment>
+        {pageHeadData}
         <ErrorAlert>
           <p>No events found for chosen filter.</p>
         </ErrorAlert>
@@ -97,6 +123,7 @@ function FilteredEventPage(props) {
   // if (props.hasError)
   //   return (
   //     <Fragment>
+  //       {pageHeadData}
   //       <ErrorAlert>
   //         <p>Invalid filter. Please adjust your values.</p>
   //       </ErrorAlert>
@@ -111,6 +138,7 @@ function FilteredEventPage(props) {
   // if (!filteredEvent || filteredEvent.length === 0)
   //   return (
   //     <Fragment>
+  //       {pageHeadData}
   //       <ErrorAlert>
   //         <p>No events found for chosen filter.</p>
   //       </ErrorAlert>
@@ -124,6 +152,7 @@ function FilteredEventPage(props) {
 
   return (
     <Fragment>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList items={filteredEvent}></EventList>
     </Fragment>

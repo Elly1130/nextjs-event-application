@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import styled from 'styled-components';
 import Button from '../ui/button';
 import DateIcon from '../icons/date-icon';
@@ -115,7 +117,7 @@ export default function EventItem(props) {
 
   return (
     <Item>
-      <img src={'/' + image} alt={title} />
+      <Image src={'/' + image} alt={title} width={250} height={160} />
       <Content>
         <div>
           <h2>{title}</h2>
