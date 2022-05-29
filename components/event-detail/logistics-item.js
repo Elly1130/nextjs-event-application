@@ -1,5 +1,4 @@
-import classes from "./logistics-item.module.css";
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Item = styled.li`
   display: flex;
@@ -37,7 +36,7 @@ function LogisticsItem(props) {
       <IconStyle>
         <Icon />
       </IconStyle>
-      <span className={classes.content}>{props.children}</span>
+      <span>{props.children}</span>
     </Item>
   );
 }
