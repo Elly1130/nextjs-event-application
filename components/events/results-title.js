@@ -1,5 +1,6 @@
-import Button from '../ui/button';
 import styled from 'styled-components';
+
+import Button from '../ui/button';
 
 const Title = styled.section`
   margin: 2rem auto;

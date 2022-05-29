@@ -1,6 +1,6 @@
 import Image from 'next/image';
-
 import styled from 'styled-components';
+
 import Button from '../ui/button';
 import DateIcon from '../icons/date-icon';
 import AddressIcon from '../icons/address-icon';

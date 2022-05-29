@@ -1,5 +1,6 @@
-import EventItem from "./event-item";
-import styled from "styled-components";
+import styled from 'styled-components';
+
+import EventItem from './event-item';
 
 const UList = styled.ul`
   width: 90%;
