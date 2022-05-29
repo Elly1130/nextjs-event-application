@@ -1,0 +1,38 @@
+import { createGlobalStyle } from 'styled-components';
+
+// At this time we do not recommend using @import within cGS due to some issues with how browsers process @import via the CSSOM APIs. Instead it's best to place these in your core index.html file (generated or static) within a typical <style> tag.
+const GlobalStyle = createGlobalStyle`
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', 'Lato', sans-serif;
+  color: #414141;
+  background-color: #e4f1f1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Lato', sans-serif;
+  color: #2b2b2b;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  margin: auto;
+  text-align: center;
+}
+`;
+
+export default GlobalStyle;
