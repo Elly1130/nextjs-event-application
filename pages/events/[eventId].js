@@ -10,6 +10,7 @@ import {
   getEventById,
   getFeaturedEvents,
 } from '../../helpers/api-util';
+import Comments from '../../components/input/comments';
 
 export default function EventDetailPage(props) {
   const { event } = props;
@@ -41,6 +42,7 @@ export default function EventDetailPage(props) {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id} />
     </Fragment>
   );
 }
