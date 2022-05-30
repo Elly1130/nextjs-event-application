@@ -44,7 +44,7 @@ export default async function handler(req, res) {
   } else if (req.method === 'GET') {
     let documents;
     try {
-      documents = await getAllDocuments('comments', { _id: -1 });
+      documents = await getAllDocuments(client, 'comments', { _id: -1 });
       res.status(201).json({ comments: documents });
     } catch (error) {
       res.status(500).json({ message: 'Getting comments failed' });

@@ -1,5 +1,6 @@
-import { useRef } from 'react/cjs/react.development';
+import { useRef, useContext } from 'react/cjs/react.development';
 import styled from 'styled-components';
+import NotificationContext from '../../store/notification-context';
 
 const Newsletter = styled.section`
   margin: 3rem auto;
@@ -47,6 +48,7 @@ const Control = styled.div`
 
 export default function NewsletterRegistration() {
   const inputEmail = useRef();
+  const notificationCtx = useContext(NotificationContext);
 
   function registrationHandler(event) {
     event.preventDefault();
@@ -54,23 +56,52 @@ export default function NewsletterRegistration() {
     // fetch user input (state or refs)
     // optional: validate input
     // send valid data to API
-    const email = inputEmail.current.value;
-    const emailBody = { email: email };
+    const enteredEmail = inputEmail.current.value;
 
-    if (!email || email.trim() === '' || !email.includes('@')) {
+    if (
+      !enteredEmail ||
+      enteredEmail.trim() === '' ||
+      !enteredEmail.includes('@')
+    ) {
       console.log('Invalid Email');
       return;
     }
 
+    notificationCtx.showNotification({
+      title: 'Signing up...',
+      message: 'Registering for newsletter.',
+      status: 'pending',
+    });
+
     fetch('/api/newsletter', {
       method: 'POST',
-      body: JSON.stringify(emailBody),
+      body: JSON.stringify({ email: enteredEmail }),
       headers: {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then(async (response) => {
+        if (response.ok) {
+          return response.json();
+        }
+
+        const data = await response.json();
+        throw new Error(data.message || 'Something went wrong');
+      })
+      .then((data) =>
+        notificationCtx.showNotification({
+          title: 'Success.',
+          message: 'Successfully signed up for newsletter.',
+          status: 'success',
+        })
+      )
+      .catch((error) =>
+        notificationCtx.showNotification({
+          title: 'Failed.',
+          message: error.message || 'Something went wrong',
+          status: 'error',
+        })
+      );
   }
 
   return (
@@ -85,7 +116,7 @@ export default function NewsletterRegistration() {
             aria-label='Your email'
             ref={inputEmail}
           />
-          <button onSubmit={registrationHandler}>Register</button>
+          <button>Register</button>
         </Control>
       </form>
     </Newsletter>
